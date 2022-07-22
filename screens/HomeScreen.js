@@ -8,6 +8,8 @@ import {
   SearchIcon,
   UserIcon,
 } from "react-native-heroicons/outline";
+import Categories from "../components/Categories/Categories";
+import FeaturedRow from "../components/FeaturedRow/FeaturedRow";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -42,9 +44,11 @@ const HomeScreen = () => {
         <AdjustmentsIcon color="#00ccbb" />
       </View>
       {/*Body */}
-      <ScrollView>
-        
-
+      <ScrollView className="bg-gray-100 mx-2">
+        <Categories />
+        <FeaturedRow id="1" title="Free Delivery" category="free" />
+        <FeaturedRow id="2" title="Must Try" category="favorites" />
+        <FeaturedRow id="3" title="Top Rated" category="rated" />
       </ScrollView>
     </SafeAreaView>
   );
