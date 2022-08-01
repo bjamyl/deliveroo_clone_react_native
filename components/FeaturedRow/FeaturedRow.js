@@ -1,10 +1,34 @@
 import { View, Text, ScrollView } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ArrowRightIcon } from "react-native-heroicons/outline";
 import FeaturedCard from "./FeaturedCard/FeaturedCard";
 import Pizza from "../../assets/pizza.jpg";
+import sanityClient from "../../sanity";
 
-const FeaturedRow = ({ title }) => {
+const FeaturedRow = ({ title, id }) => {
+  const [restaurants, setRestaurants] = useState([]);
+  useEffect(() => {
+    sanityClient
+      .fetch(
+        `*[_type == 'featured'  && _id == $id]{
+    ...,
+    restaurants[]->{
+      ...,
+      dishes[]->,
+  type{
+    name
+  }
+    }
+  }[0]`,
+        { id }
+      )
+      .then((data) => {
+        setRestaurants(data?.restaurants);
+      });
+  }, []);
+
+  console.log(restaurants);
+
   return (
     <View>
       <View className="flex-row justify-between px-2 pt-4">
@@ -19,45 +43,20 @@ const FeaturedRow = ({ title }) => {
           paddingHorizontal: 6,
         }}
       >
-        <FeaturedCard
-          imgUrl={Pizza}
-          dishes={[]}
-          lat={20}
-          long={20}
-          address="Lakeside"
-          rating={4.5}
-          id={123}
-          description="Best Pizza In Ghana"
-          title="Papa's Pizza"
-          price='50.00'
-          estimated_tiime='35-40 min'
-        />
-        <FeaturedCard
-          imgUrl={Pizza}
-          dishes={[]}
-          lat={20}
-          long={20}
-          address="Lakeside"
-          rating={4.5}
-          id={123}
-          description="Best Pizza In Ghana"
-          title="Papa's Pizza"
-          price='50.00'
-          estimated_tiime='35-40 min'
-        />
-        <FeaturedCard
-          imgUrl={Pizza}
-          dishes={[]}
-          lat={20}
-          long={20}
-          address="Lakeside"
-          rating={4.5}
-          id={123}
-          description="Best Pizza In Ghana"
-          title="Papa's Pizza"
-          price='50.00'
-          estimated_tiime='35-40 min'
-        />
+        {restaurants?.map((restaurant) => (
+          <FeaturedCard
+            key={restaurant._id}
+            dishes={restaurant.dishes}
+            lat={restaurant.lat}
+            long={restaurant.long}
+            address={restaurant.address}
+            rating={restaurant.rating}
+            id={restaurant._id}
+            description={restaurant.short_description}
+            title={restaurant.title}
+            imgUrl={restaurant.image}
+          />
+        ))}
       </ScrollView>
     </View>
   );
