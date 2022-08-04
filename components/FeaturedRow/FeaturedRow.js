@@ -53,8 +53,9 @@ const FeaturedRow = ({ title, id }) => {
             rating={restaurant.rating}
             id={restaurant._id}
             description={restaurant.short_description}
-            title={restaurant.title}
+            title={restaurant.name}
             imgUrl={restaurant.image}
+            estimated_time={restaurant.estimated_time}
           />
         ))}
       </ScrollView>

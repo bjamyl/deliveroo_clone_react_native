@@ -43,5 +43,10 @@ export default {
       type: "array",
       of: [{ type: "reference", to: [{ type: "dish" }] }],
     },
+    {
+      name: "estimated_time",
+      title: "Time on arrival",
+      type: "string",
+    },
   ],
 };

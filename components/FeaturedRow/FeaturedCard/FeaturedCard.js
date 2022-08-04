@@ -15,7 +15,7 @@ const FeaturedCard = ({
   description,
   title,
   price,
-  estimated_tiime,
+  estimated_time,
 }) => {
   return (
     <TouchableOpacity className="bg-white shadow mr-3">
@@ -25,7 +25,7 @@ const FeaturedCard = ({
           className="rounded-lg h-36 w-64"
         />
         <View className="bg-white w-auto rounded-xl absolute bottom-4 right-4 px-2 py-0.5">
-          <Text className="text-xs font-bold">{estimated_tiime}</Text>
+          <Text className="text-xs font-bold">{estimated_time}</Text>
         </View>
       </View>
       <View className="m-2">
